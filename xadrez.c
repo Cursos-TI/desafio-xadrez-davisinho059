@@ -1,43 +1,67 @@
 #include <stdio.h>
-// variaveis de controle para cada peça
-int main() {
-    int bispo = 0;
-    int torre = 1;
-    int rainha = 1;
-    char cavalo = 0;
-    char movimentocompleto= 1;//flag para controlar o movimento em 'L'
 
-    printf("movimentos das peças de xadrez\n");
-    
-    // BISPO com FOR 5 casas na diagonal cima-direita
-    for (bispo = 1; bispo <=5; bispo++ ) {
-         printf("bispo, cima direita %d\n", bispo);
+// BISPO com recursividade + loops aninhados
+void moverbispo(int vertical, int horizontal) {
+    if (vertical > 0 && horizontal > 0) {
+        for (int i = 0; i < vertical; i++) {
+            for (int j = 0; j < horizontal; j++) {
+                printf("Cima-direita\n");
+            }
+        }
+        moverbispo(vertical - 1, horizontal - 1);
     }
-            
-    // TORRE com WHILE 5 casas para a direita
-   while (torre <= 5){
-       printf("torre, direita %d\n", torre);
-       torre++;
-    }
-   
-   // rainha com DO-WHILE (8 casas para a esquerda)
-   do {
-        printf("rainha, esquerda %d\n",rainha);
-        rainha ++;
- } while(rainha <= 8);
-   printf("\n"); //Separa o movimento do Cavalo dos movimentos anteriores com uma linha em branco.
-
-// cavalo com for (direçao formato L)
- while (movimentocompleto--)
-  {
-     for (cavalo = 0; cavalo < 2; cavalo++) {
-          printf("L,baixo\n"); // imprime baixo duas vezes
-     }
-     printf("L,esquerda\n"); // imprime "esquerda" uma vez
-     }
-  return 0;
 }
 
+// TORRE com recursividade
+void movertorre(int torre) {
+    if (torre <= 5) {
+        printf("Direita\n");
+        movertorre(torre + 1);
+    }
+}
 
+// RAINHA com recursividade (8 vezes para a esquerda)
+void moverrainha(int rainha) {
+    if (rainha <= 8) {
+        printf("Esquerda\n");
+        moverrainha(rainha + 1);
+    }
+}
 
-    
+// CAVALO com loops complexos
+void movercavalo() {
+    for (int i = 0; i < 2; i++) {
+        printf("Cima\n");
+    }
+    for (int j = 0; j < 2; j++) {
+        if (j == 0) {
+            printf("Direita\n");
+        } else if (j > 1) {
+            break;
+        } else {
+            continue;
+        }
+    }
+}
+
+int main() {
+    printf("Movimentos das peças de xadrez\n\n");
+
+    printf("Bispo:\n");
+    moverbispo(3, 3);
+    printf("\n");
+
+    printf("Torre:\n");
+    movertorre(1);
+    printf("\n");
+
+    printf("Rainha:\n");
+    moverrainha(1);
+    printf("\n");
+
+    printf("Cavalo:\n");
+    movercavalo();
+    printf("\n");
+
+    return 0;
+}
